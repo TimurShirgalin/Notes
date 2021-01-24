@@ -35,7 +35,7 @@ public class Notes {
         noteNames.add(noteName);
     }
 
-    public void setId(int i) {
+    public void setId(String i) {
         id.add(i);
     }
 }

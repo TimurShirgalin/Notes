@@ -16,9 +16,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setNotesData() {
-        notes.setId(1);
-        notes.setId(2);
-        notes.setId(3);
+        notes.setId("note1");
+        notes.setId("note2");
+        notes.setId("note3");
         notes.setDates("04.01.2021 15:19");
         notes.setDates("12.01.2021 21:56");
         notes.setDates("24.01.2021 12:08");
