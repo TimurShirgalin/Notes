@@ -5,22 +5,21 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ShowNoteActivity extends AppCompatActivity {
+public class ChangeDateActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_note);
+        setContentView(R.layout.activity_change_date);
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             finish();
             return;
         }
         if (savedInstanceState == null) {
-            ShowNoteFragment showNoteFragment = new ShowNoteFragment();
-            showNoteFragment.setArguments(getIntent().getExtras());
+            DateChangeFragment dateChangeFragment = new DateChangeFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_Note, showNoteFragment).commit();
+                    .replace(R.id.fragment_date_change, dateChangeFragment).commit();
         }
     }
 }

@@ -3,4 +3,5 @@
     <dimen name="margin">10dp</dimen>
     <dimen name="textSize">25sp</dimen>
     <dimen name="cornerRadius">12dp</dimen>
+    <dimen name="text_size">30sp</dimen>
 </resources>
