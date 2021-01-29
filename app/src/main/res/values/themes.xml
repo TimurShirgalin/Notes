@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Notes" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="ThemeNotes" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -12,8 +12,21 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="android:background">@color/gray_background</item>
+        <item name="android:background">@color/white</item>
     </style>
+
+    <style name="ThemeNotes.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="ThemeNotes.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:background">@color/gray_background</item>
+        <item name="title">Notes</item>
+    </style>
+
+    <style name="ThemeNotes.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
 
     <style name="ButtonNote" parent="Theme.MaterialComponents.DayNight">
         <item name="android:backgroundTint">@color/white</item>
@@ -23,10 +36,15 @@
         <item name="android:textSize">@dimen/textSize</item>
     </style>
 
+    <style name="TitleSize" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">@dimen/text_size</item>
+    </style>
+
     <style name="ButtonAddNote" parent="Theme.MaterialComponents.DayNight">
         <item name="android:backgroundTint">@color/blue</item>
         <item name="android:layout_gravity">right</item>
         <item name="android:textSize">@dimen/textSize</item>
         <item name="android:layout_margin">@dimen/margin</item>
     </style>
+
 </resources>

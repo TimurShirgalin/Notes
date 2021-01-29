@@ -46,7 +46,7 @@ public class DateChangeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String newDate = String.format("%d.%d.%d", datePicker.getDayOfMonth(), (datePicker.getMonth() + 1), datePicker.getYear());
-                NotesData.dates.set(index, newDate);
+                Data.dates.set(index, newDate);
                 getActivity().finish();
             }
         });

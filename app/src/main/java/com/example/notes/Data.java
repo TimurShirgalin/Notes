@@ -2,8 +2,10 @@ package com.example.notes;
 
 import java.util.ArrayList;
 
-public class NotesData {
-
+public class Data {
+    public static final String VIEW_NOTE = "viewNote";
+    public static final String SHARED_PREF_NOTE = "sharedPref";
+    public static final String NOTE_NUMBER = "noteNumber";
     protected static ArrayList<String> noteNames = new ArrayList<>();
     protected static ArrayList<String> dates = new ArrayList<>();
     protected static ArrayList<String> notes = new ArrayList<>();

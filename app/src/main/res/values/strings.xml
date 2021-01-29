@@ -5,4 +5,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="text_edit_date">Edit date</string>
     <string name="change_date_button">Change Date</string>
+    <string name="title_main">main</string>
+    <string name="title_settings">Settings</string>
 </resources>
