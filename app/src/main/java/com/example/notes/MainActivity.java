@@ -1,6 +1,5 @@
 package com.example.notes;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 
@@ -28,15 +27,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initMainActivity() {
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            NoteListFragment noteListFragment = new NoteListFragment();
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.fragment_container, noteListFragment)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .addToBackStack("fragmentListNote")
-                    .commitAllowingStateLoss();
-        }
+        NoteListFragment noteListFragment = new NoteListFragment();
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.fragment_container, noteListFragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
     }
 
     @Override

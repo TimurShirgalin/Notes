@@ -85,8 +85,8 @@ public class ViewNoteFragment extends Fragment {
         if (getActivity() != null) {
             FragmentManager fm = getActivity().getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.fragment_view_note, editNoteFragment);
-            ft.addToBackStack("NoteViewLand");
+            ft.replace(R.id.edit_land, editNoteFragment);
+            ft.addToBackStack(null);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.commit();
         }

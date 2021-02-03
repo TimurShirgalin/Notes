@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import static com.example.notes.Data.VIEW_NOTE;
 
 public class EditNoteFragment extends Fragment {
-
     private int index;
 
     public static EditNoteFragment newInstance(int index) {
@@ -63,23 +62,6 @@ public class EditNoteFragment extends Fragment {
         saveButton.setOnClickListener(v -> {
             initEditText(editTextNoteName, editTextNote);
         });
-
-//        AppCompatTextView textViewNoteName = new AppCompatTextView(getContext());
-//        textViewNoteName.setTextSize(30);
-//        textViewNoteName.setTextColor(Color.BLACK);
-//        String note = Data.notes.get(index);
-//        String noteName = Data.noteNames.get(index);
-//        String date = Data.dates.get(index);
-//        String text = String.format("%s\n%s\n\n%s", noteName, date, note);
-//        SpannableString noteText = new SpannableString(text);
-//        noteText.setSpan(new RelativeSizeSpan(0.4f), noteName.length() + 1,
-//                date.length() + noteName.length() + 1, 0);
-//        noteText.setSpan(new RelativeSizeSpan(0.7f), noteText.length() - note.length() - 2,
-//                noteText.length(), 0);
-//        noteText.setSpan(new ForegroundColorSpan(Color.GRAY), noteName.length() + 1,
-//                date.length() + noteName.length() + 1, 0);
-//        linearLayout.addView(textViewNoteName);
-//        textViewNoteName.setText(noteText);
     }
 
     private void initEditText(AppCompatEditText editTextNoteName, AppCompatEditText editTextNote) {
@@ -113,7 +95,7 @@ public class EditNoteFragment extends Fragment {
         ContextThemeWrapper context = new ContextThemeWrapper(getContext(), R.style.ButtonAddNote);
         AppCompatButton saveButton = new AppCompatButton(context);
         linearLayout.addView(saveButton);
-        saveButton.setText("Save");
+        saveButton.setText(R.string.addButtonName);
         saveButton.setTextColor(Color.WHITE);
         ViewGroup.LayoutParams params = saveButton.getLayoutParams();
         params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
