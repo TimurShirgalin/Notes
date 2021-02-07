@@ -2,7 +2,7 @@
 <resources>
     <dimen name="margin">10dp</dimen>
     <dimen name="textSize">20sp</dimen>
-    <dimen name="cornerRadius">12dp</dimen>
+    <dimen name="cornerRadius">11dp</dimen>
     <dimen name="text_size">30sp</dimen>
     <dimen name="layout_width_0">0dp</dimen>
 </resources>
