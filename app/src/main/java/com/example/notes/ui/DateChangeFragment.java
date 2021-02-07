@@ -1,4 +1,4 @@
-package com.example.notes;
+package com.example.notes.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+
+import com.example.notes.Data;
+import com.example.notes.R;
 
 public class DateChangeFragment extends Fragment {
     static final String KEY_CHANGE = "change";
