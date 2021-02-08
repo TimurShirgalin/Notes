@@ -1,9 +1,11 @@
-package com.example.notes;
+package com.example.notes.ui;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.notes.R;
 
 public class ChangeDateActivity extends AppCompatActivity {
 
