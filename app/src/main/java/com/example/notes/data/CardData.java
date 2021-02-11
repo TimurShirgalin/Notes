@@ -3,6 +3,8 @@ package com.example.notes.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Date;
+
 public class CardData implements Parcelable {
     public static final Creator<CardData> CREATOR = new Creator<CardData>() {
         @Override
@@ -16,10 +18,11 @@ public class CardData implements Parcelable {
         }
     };
     private String noteName;
-    private String noteDate;
+    private Date noteDate;
     private String note;
+    private String id;
 
-    public CardData(String noteName, String noteDate, String note) {
+    public CardData(String noteName, Date noteDate, String note) {
         this.noteName = noteName;
         this.noteDate = noteDate;
         this.note = note;
@@ -27,7 +30,7 @@ public class CardData implements Parcelable {
 
     protected CardData(Parcel in) {
         noteName = in.readString();
-        noteDate = in.readString();
+        noteDate = new Date(in.readLong());
         note = in.readString();
     }
 
@@ -35,7 +38,7 @@ public class CardData implements Parcelable {
         return noteName;
     }
 
-    public String getNoteDate() {
+    public Date getNoteDate() {
         return noteDate;
     }
 
@@ -51,7 +54,15 @@ public class CardData implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(noteName);
-        dest.writeString(noteDate);
+        dest.writeLong(noteDate.getTime());
         dest.writeString(note);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

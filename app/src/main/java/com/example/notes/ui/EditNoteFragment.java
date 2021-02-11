@@ -7,21 +7,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.example.notes.MainActivity;
 import com.example.notes.R;
 import com.example.notes.data.CardData;
 import com.example.notes.observe.Publisher;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import static com.example.notes.Data.VIEW_NOTE;
 
@@ -29,11 +28,20 @@ public class EditNoteFragment extends Fragment {
     private Publisher publisher;
     private CardData cardData;
 
+    private TextInputEditText noteName;
+    private TextInputEditText note;
+    private TextView noteDate;
+
     public static EditNoteFragment newInstance(CardData cardData) {
         EditNoteFragment fragment = new EditNoteFragment();
         Bundle args = new Bundle();
         args.putParcelable(VIEW_NOTE, cardData);
         fragment.setArguments(args);
+        return fragment;
+    }
+
+    private static EditNoteFragment newInstance() {
+        EditNoteFragment fragment = new EditNoteFragment();
         return fragment;
     }
 
@@ -61,28 +69,52 @@ public class EditNoteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_edit_note, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_note, container, false);
+        initEditText(view);
+        if (cardData != null) {
+            populateView();
+        }
+        return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        publisher.notify(cardData);
+        super.onDestroy();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        cardData = collectData();
+    }
+
+    private CardData collectData() {
+        String noteName = this.noteName.getText().toString();
+        String note = this.note.getText().toString();
+        Date noteDate = Calendar.getInstance().getTime();
+        return new CardData(noteName, noteDate, note);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        EditText noteNameEdit = getActivity().findViewById(R.id.noteName_edit);
-        TextView noteDateEdit = getActivity().findViewById(R.id.noteDate_edit);
-        EditText noteEdit = getActivity().findViewById(R.id.note_edit);
-        AppCompatButton saveButton = getActivity().findViewById(R.id.save_button);
-        if (cardData.getNoteName() != null & cardData.getNoteDate() != null & cardData.getNote() != null) {
-            noteNameEdit.setText(cardData.getNoteName());
-            noteDateEdit.setText(cardData.getNoteDate());
-            noteEdit.setText(cardData.getNote());
-        } else {
-            noteNameEdit.setHint("Заметка");
-            noteEdit.setHint("Текст заметки");
-            getCurrentDate(noteDateEdit);
-        }
-        saveButton.setOnClickListener(v -> {
-            initEditText(noteNameEdit, noteDateEdit, noteEdit);
-        });
+//        EditText noteNameEdit = getActivity().findViewById(R.id.noteName_edit);
+//        TextView noteDateEdit = getActivity().findViewById(R.id.noteDate_edit);
+//        EditText noteEdit = getActivity().findViewById(R.id.note_edit);
+//        AppCompatButton saveButton = getActivity().findViewById(R.id.save_button);
+//        if (cardData.getNoteName() != null & cardData.getNoteDate() != null & cardData.getNote() != null) {
+//            noteNameEdit.setText(cardData.getNoteName());
+//            noteDateEdit.setText(cardData.getNoteDate().toString());
+//            noteEdit.setText(cardData.getNote());
+//        } else {
+//            noteNameEdit.setHint(R.string.name_edit_hint);
+//            noteEdit.setHint(R.string.note_hint);
+//            noteDateEdit.setText(Calendar.getInstance().getTime().toString());
+//        }
+//        saveButton.setOnClickListener(v -> {
+//            initEditText(noteNameEdit, noteDateEdit, noteEdit);
+//        });
     }
 
     private void getCurrentDate(TextView noteDateEdit) {
@@ -93,15 +125,31 @@ public class EditNoteFragment extends Fragment {
         noteDateEdit.setText(String.format("%s.%s.%s", day, month, year));
     }
 
-    private void initEditText(EditText noteNameEdit, TextView noteDateEdit, EditText noteEdit) {
-        String noteName = String.valueOf(noteNameEdit.getText());
-        String note = String.valueOf(noteEdit.getText());
-        String date = String.valueOf(noteDateEdit.getText());
-        cardData = new CardData(noteName, date, note);
-        publisher.notify(cardData);
-        hideKeyboard();
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        fm.popBackStack();
+    private void initEditText(View view) {
+    noteName = view.findViewById(R.id.noteName_edit);
+    note = view.findViewById(R.id.note_edit);
+    noteDate = view.findViewById(R.id.noteDate_edit);
+//        String noteName = String.valueOf(noteNameEdit.getText());
+//        String note = String.valueOf(noteEdit.getText());
+//        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+//        Date date = Calendar.getInstance().getTime();
+//        try {
+//            date = format.parse(String.valueOf(noteDateEdit.getText()));
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        cardData = new CardData(noteName, date, note);
+//        cardData.setId(cardData.getId());
+//        publisher.notify(cardData);
+//        hideKeyboard();
+//        FragmentManager fm = getActivity().getSupportFragmentManager();
+//        fm.popBackStack();
+    }
+
+    private void populateView() {
+        noteName.setText(cardData.getNoteName());
+        note.setText(cardData.getNote());
+        noteDate.setText(cardData.getNoteDate().toString());
     }
 
     private void hideKeyboard() {

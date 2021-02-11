@@ -9,6 +9,7 @@ public class Data {
     public static ArrayList<String> noteNames = new ArrayList<>();
     public static ArrayList<String> dates = new ArrayList<>();
     public static ArrayList<String> notes = new ArrayList<>();
+    private String id;
 
     public static void setData() {
         noteNames.add("Заметка1");
@@ -44,5 +45,13 @@ public class Data {
         noteNames.set(position, noteName);
         dates.set(position, date);
         notes.set(position, note);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
