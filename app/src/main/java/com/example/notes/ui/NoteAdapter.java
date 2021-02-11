@@ -14,14 +14,18 @@ import com.example.notes.data.CardData;
 import com.example.notes.data.CardSource;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
-    private final CardSource cardSource;
+    private CardSource cardSource;
     private final Fragment fragment;
     private ListClickListener clickListener;
     private int cardPosition;
 
-    public NoteAdapter(CardSource cardSource, Fragment fragment) {
-        this.cardSource = cardSource;
+    public NoteAdapter(Fragment fragment) {
         this.fragment = fragment;
+    }
+
+    public void setDataSource(CardSource cardSource) {
+        this.cardSource = cardSource;
+        notifyDataSetChanged();
     }
 
     public int getCardPosition() {
@@ -78,7 +82,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
         private void setData(CardData cardData) {
             noteName.setText(cardData.getNoteName());
-            noteDate.setText(cardData.getNoteDate());
+            noteDate.setText(cardData.getNoteDate().toString());
         }
 
         private void registerContextMenu(View itemView) {

@@ -10,4 +10,6 @@
     <string name="title_deleteAll">Delete All</string>
     <string name="title_change">Change</string>
     <string name="title_delete">Delete</string>
+    <string name="name_edit_hint">Заметка</string>
+    <string name="note_hint">Текст заметки</string>
 </resources>

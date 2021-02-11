@@ -1,6 +1,7 @@
 package com.example.notes.ui;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,11 +42,6 @@ public class ViewNoteFragment extends Fragment {
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -63,14 +59,22 @@ public class ViewNoteFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         LinearLayout linearLayout = (LinearLayout) view;
-        TextView noteNameView = getActivity().findViewById(R.id.noteName_view);
-        TextView noteDateView = getActivity().findViewById(R.id.noteDate_view);
-        TextView noteView = getActivity().findViewById(R.id.note_view);
+        TextView noteNameView = new TextView(getContext());
+        noteNameView.setTextSize(getResources().getDimension(R.dimen.text_size_10));
+        noteNameView.setTextColor(Color.BLACK);
+        TextView noteDateView = new TextView(getContext());
+        noteDateView.setTextSize(getResources().getDimension(R.dimen.text_size_4));
+        TextView noteView = new TextView(getContext());
+        noteView.setTextColor(Color.BLACK);
+        noteView.setTextSize(getResources().getDimension(R.dimen.text_size_7));
         if (noteDateView != null || noteDateView != null || noteView != null) {
             noteNameView.setText(cardData.getNoteName());
-            noteDateView.setText(cardData.getNoteDate());
+            noteDateView.setText(cardData.getNoteDate().toString());
             noteView.setText(cardData.getNote());
         }
+        linearLayout.addView(noteNameView);
+        linearLayout.addView(noteDateView);
+        linearLayout.addView(noteView);
         linearLayout.setOnClickListener(v -> initEdit());
     }
 

@@ -25,7 +25,8 @@ import com.example.notes.MainActivity;
 import com.example.notes.R;
 import com.example.notes.data.CardData;
 import com.example.notes.data.CardSource;
-import com.example.notes.data.CardSourceImpl;
+import com.example.notes.data.CardSourceFirebaseImp;
+import com.example.notes.data.CardSourceResponse;
 import com.example.notes.observe.Publisher;
 
 public class NoteListFragment extends Fragment {
@@ -54,6 +55,13 @@ public class NoteListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initNotesData(view);
         setHasOptionsMenu(true);
+        data = new CardSourceFirebaseImp().init(new CardSourceResponse() {
+            @Override
+            public void initialized(CardSource cardSource) {
+                noteAdapter.notifyDataSetChanged();
+            }
+        });
+        noteAdapter.setDataSource(data);
     }
 
     @Override
@@ -81,8 +89,8 @@ public class NoteListFragment extends Fragment {
 
     private void initNotesData(View view) {
         recyclerView = view.findViewById(R.id.recycler);
-        data = new CardSourceImpl().init();
-        noteAdapter = new NoteAdapter(data, this);
+//        data = new CardSourceImpl().init();
+        noteAdapter = new NoteAdapter(this);
         recyclerView.setAdapter(noteAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -143,7 +151,46 @@ public class NoteListFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
+//        switch (item.getItemId()) {
+//            case R.id.add_note_item:
+//                cardData = new CardData(null, null, null);
+//                EditNoteFragment editNoteFragment = EditNoteFragment.newInstance(cardData);
+//                if (getActivity() != null) {
+//                    FragmentManager fm = getActivity().getSupportFragmentManager();
+//                    FragmentTransaction ft = fm.beginTransaction();
+//                    ft.replace(R.id.edit_land, editNoteFragment)
+//                            .addToBackStack(null)
+//                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                            .commit();
+//                }
+//                publisher.notify1();
+//                publisher.subscribe(cardData -> {
+//                    data.addCardData(cardData);
+//                    noteAdapter.notifyItemInserted(data.size() - 1);
+//                    recyclerView.scrollToPosition(data.size() - 1);
+//                });
+//                return true;
+//            case R.id.deleteAll:
+//                data.deleteAll();
+//                noteAdapter.notifyDataSetChanged();
+//                if (isLandscape) {
+//                    FragmentManager fm = getActivity().getSupportFragmentManager();
+//                    Fragment fragment = fm.findFragmentById(R.id.fragment_view_note);
+//                    if (fragment != null) {
+//                        FragmentTransaction ft = fm.beginTransaction();
+//                        ft.remove(fragment)
+//                                .commit();
+//                    }
+//                }
+//                return true;
+//        }
+        return onItemSelected(item.getItemId()) || super.onOptionsItemSelected(item);
+    }
+
+    private boolean onItemSelected(int itemId) {
+
+        int position = noteAdapter.getCardPosition();
+        switch (itemId) {
             case R.id.add_note_item:
                 cardData = new CardData(null, null, null);
                 EditNoteFragment editNoteFragment = EditNoteFragment.newInstance(cardData);
@@ -175,26 +222,13 @@ public class NoteListFragment extends Fragment {
                     }
                 }
                 return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void setSharedPreferences(int index) {
-        SharedPreferences sP = requireActivity().getSharedPreferences(Data.SHARED_PREF_NOTE, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sP.edit();
-        editor.putInt(Data.NOTE_NUMBER, index);
-        editor.apply();
-    }
-
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        int position = noteAdapter.getCardPosition();
-        cardData = data.getCardData(position);
-        switch (item.getItemId()) {
             case R.id.menu_change:
+                cardData = data.getCardData(position);
                 showEditView(position);
                 return true;
             case R.id.menu_delete:
+
+                cardData = data.getCardData(position);
                 data.delete(position);
                 noteAdapter.notifyItemRemoved(position);
                 if (isLandscape) {
@@ -207,7 +241,38 @@ public class NoteListFragment extends Fragment {
                 }
                 return true;
         }
-        return super.onContextItemSelected(item);
+        return false;
+    }
+
+    private void setSharedPreferences(int index) {
+        SharedPreferences sP = requireActivity().getSharedPreferences(Data.SHARED_PREF_NOTE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sP.edit();
+        editor.putInt(Data.NOTE_NUMBER, index);
+        editor.apply();
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+//        int position = noteAdapter.getCardPosition();
+//        cardData = data.getCardData(position);
+//        switch (item.getItemId()) {
+//            case R.id.menu_change:
+//                showEditView(position);
+//                return true;
+//            case R.id.menu_delete:
+//                data.delete(position);
+//                noteAdapter.notifyItemRemoved(position);
+//                if (isLandscape) {
+//                    FragmentManager fm = requireActivity().getSupportFragmentManager();
+//                    Fragment fragment = fm.findFragmentById(R.id.fragment_view_note);
+//                    if (fragment != null) {
+//                        FragmentTransaction ft = fm.beginTransaction();
+//                        ft.remove(fragment).commit();
+//                    }
+//                }
+//                return true;
+//        }
+        return onItemSelected(item.getItemId()) || super.onContextItemSelected(item);
     }
 
     @Override
